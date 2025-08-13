@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="IEC-部门Git代码管理规定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部门Git代码管理规定">
+<meta property="og:url" content="http://example.com/2025/08/12/Git%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="枫叶苑">
+<meta property="og:description" content="IEC-部门Git代码管理规定">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-08-12T07:30:00.000Z">
+<meta property="article:modified_time" content="2025-08-13T08:20:28.262Z">
+<meta property="article:author" content="枫叶">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="版本管理">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/08/12/Git%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>部门Git代码管理规定 | 枫叶苑</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">枫叶苑</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/12/Git%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="枫叶">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶苑">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          部门Git代码管理规定
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-08-12 15:30:00" itemprop="dateCreated datePublished" datetime="2025-08-12T15:30:00+08:00">2025-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-08-13 16:20:28" itemprop="dateModified" datetime="2025-08-13T16:20:28+08:00">2025-08-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">软件开发</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">IEC-部门Git代码管理规定</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="部门Git代码管理规定（草稿）"><a href="#部门Git代码管理规定（草稿）" class="headerlink" title="部门Git代码管理规定（草稿）"></a>部门Git代码管理规定（草稿）</h1><h2 id="1-目的"><a href="#1-目的" class="headerlink" title="1. 目的"></a>1. 目的</h2><p>为规范团队代码管理流程，提高协作效率，保证代码质量，减少代码冲突，特制定本规定。所有团队成员必须严格遵守。</p>
+<h2 id="2-分支管理规范"><a href="#2-分支管理规范" class="headerlink" title="2. 分支管理规范"></a>2. 分支管理规范</h2><h3 id="2-1-分支类型及命名"><a href="#2-1-分支类型及命名" class="headerlink" title="2.1 分支类型及命名"></a>2.1 分支类型及命名</h3><ul>
+<li><p><strong>主分支</strong></p>
+<ul>
+<li><code>main</code>：生产环境代码，随时可部署，仅通过合并请求更新(所有仓库的main分支均关闭push权限，合并请求必须代码负责人审批和CI流水线检测，若负责人因故无法审批，由经理人进行审批并备注)。</li>
+<li><code>develop</code>：开发主分支，包含最新开发成果，开发分支由开发人员或项目经理维护。</li>
+<li>发布标签：<code>release/vX.Y.Z</code>，如<code>release/v1.2.0</code>，版本tag合并必需与PLM发布版本一致</li>
+</ul>
+</li>
+<li><p><strong>辅助分支</strong></p>
+<ul>
+<li>功能分支：<code>feature/[issue-id]-简短描述</code>，如<code>feature/123-user-login</code>，相关分支不受任何保护，由开发人员创建删除。</li>
+<li>修复分支：<code>bugfix/[issue-id]-简短描述</code>，如<code>bugfix/124-fix-login-validation</code>，相关分支不受任何保护，由开发人员创建删除。</li>
+<li>紧急临时分支：<code>hotfix/vX.Y.Z-[issue-id]</code>，如<code>hotfix/v1.1.1-125</code>，相关分支由代码负责人审批和管理。</li>
+<li>测试分支：<code>test/[issue-id]-简短描述</code>，如<code>test/ptp测试</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-分支流程"><a href="#2-2-分支流程" class="headerlink" title="2.2 分支流程"></a>2.2 分支流程</h3><ol>
+<li>所有开发工作在<code>develop</code>分支完成</li>
+<li>功能完成后，通过合并请求(MR&#x2F;PR)合并回<code>develop</code>分支或<code>main</code>分支</li>
+<li>发布前从<code>main</code>创建<code>test</code>分支，仅修复bug，不允许添加新功能</li>
+<li>发布测试通过后，将<code>test</code>分支合并到<code>main</code>和<code>develop</code></li>
+<li>生产环境紧急问题从<code>main</code>创建<code>hotfix</code>分支或者<code>bug</code>分支，修复后合并到<code>main</code>和<code>develop</code></li>
+</ol>
+<h2 id="3-提交规范"><a href="#3-提交规范" class="headerlink" title="3. 提交规范"></a>3. 提交规范</h2><h3 id="3-1-提交信息格式"><a href="#3-1-提交信息格式" class="headerlink" title="3.1 提交信息格式"></a>3.1 提交信息格式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;类型&gt;[可选作用域]: &lt;描述&gt;</span><br><span class="line"></span><br><span class="line">[可选正文]</span><br><span class="line"></span><br><span class="line">[可选脚注]</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">feat(auth): 实现用户登录功能</span><br><span class="line"></span><br><span class="line">- 添加登录表单组件</span><br><span class="line">- 实现登录API调用</span><br><span class="line">- 添加JWT认证逻辑</span><br><span class="line"></span><br><span class="line">Closes #123</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-提交类型"><a href="#3-2-提交类型" class="headerlink" title="3.2 提交类型"></a>3.2 提交类型</h3><ul>
+<li><code>feat</code>：新功能</li>
+<li><code>fix</code>：bug修复</li>
+<li><code>docs</code>：文档更新</li>
+<li><code>style</code>：代码格式调整，不影响代码运行的变动</li>
+<li><code>refactor</code>：代码重构，既不是新功能也不是修复bug</li>
+<li><code>perf</code>：性能优化</li>
+<li><code>test</code>：添加或修改测试代码</li>
+<li><code>build</code>：构建流程或依赖变更</li>
+<li><code>ci</code>：CI配置文件和脚本变更</li>
+<li><code>chore</code>：其他不修改src或test的变更</li>
+</ul>
+<h2 id="4-代码合并规范"><a href="#4-代码合并规范" class="headerlink" title="4. 代码合并规范"></a>4. 代码合并规范</h2><ol>
+<li>所有代码合并必须通过合并请求(MR&#x2F;PR)进行，禁止直接推送到保护分支</li>
+<li>合并请求至少需要1名团队成员审核通过</li>
+<li>合并前必须确保CI检查通过（包括代码风格、单元测试等）</li>
+<li>合并时使用”Squash and merge”方式，保持提交历史清晰</li>
+<li>合并请求标题应遵循与提交信息相同的规范</li>
+</ol>
+<h2 id="5-代码审查规范"><a href="#5-代码审查规范" class="headerlink" title="5. 代码审查规范"></a>5. 代码审查规范</h2><ol>
+<li>审查者应在24小时内响应合并请求<br>代码提交人员需采用钉钉或电话方式及时与评审人员沟通</li>
+<li>审查重点包括：<ul>
+<li>代码逻辑正确性</li>
+<li>代码风格是否符合团队规范</li>
+<li>是否包含适当的测试</li>
+<li>潜在的性能问题</li>
+<li>安全性考虑</li>
+</ul>
+</li>
+<li>审查意见应具体、建设性，针对具体代码，避免模糊的评价</li>
+<li>提交者应积极回应审查意见，必要时进行修改或添加注释</li>
+</ol>
+<h2 id="6-代码冲突处理"><a href="#6-代码冲突处理" class="headerlink" title="6. 代码冲突处理"></a>6. 代码冲突处理</h2><ol>
+<li>开发者应及时从目标分支同步最新代码，减少冲突可能性</li>
+<li>冲突解决应由相关代码的作者共同协商解决，默认后提交者解决所有冲突</li>
+<li>解决冲突后，需确保代码仍能正常工作并通过测试</li>
+</ol>
+<h2 id="7-标签管理"><a href="#7-标签管理" class="headerlink" title="7. 标签管理"></a>7. 标签管理</h2><ol>
+<li>每次发布到生产环境后，在<code>main</code>分支创建版本标签</li>
+<li>标签格式：<code>vX.Y.Z</code>，遵循语义化版本规范<ul>
+<li>X：主版本号，不兼容的API变更</li>
+<li>Y：次版本号，向后兼容的功能新增</li>
+<li>Z：修订号，向后兼容的问题修正</li>
+</ul>
+</li>
+<li>标签必需添加描述，说明该版本的变更明显</li>
+</ol>
+<h2 id="8-代码保密"><a href="#8-代码保密" class="headerlink" title="8. 代码保密"></a>8. 代码保密</h2><ol>
+<li>禁止将包含敏感信息（密钥、密码等）的代码提交到仓库</li>
+<li>敏感配置应使用环境变量或配置文件，并将配置文件加入<code>.gitignore</code></li>
+<li>禁止将内部项目代码推送到公共仓库</li>
+<li>离开团队的成员应及时移除其代码仓库访问权限</li>
+<li>代码管理或经理人工作调整时应及时告知维护人员更改权限</li>
+<li>代码管理人员和经理人负责代码团队成员的权限管理</li>
+</ol>
+<h2 id="9-其他"><a href="#9-其他" class="headerlink" title="9. 其他"></a>9. 其他</h2><ol>
+<li>代码上传非必要不上传编译过程文件</li>
+<li>管理流程仅适用于C&#x2F;C++嵌入式软件项目</li>
+</ol>
+<hr>
+<p><strong>附注</strong>：推荐的<code>.gitignore</code>模板、提交信息校验配置等可根据项目具体情况另行制定。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+              <a href="/tags/%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" rel="tag"># 版本管理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/08/12/Perf%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/" rel="prev" title="Perf工具使用">
+      <i class="fa fa-chevron-left"></i> Perf工具使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/08/13/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E9%97%A8Git%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86%E8%A7%84%E5%AE%9A%EF%BC%88%E8%8D%89%E7%A8%BF%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">部门Git代码管理规定（草稿）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%9B%AE%E7%9A%84"><span class="nav-number">1.1.</span> <span class="nav-text">1. 目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83"><span class="nav-number">1.2.</span> <span class="nav-text">2. 分支管理规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%88%86%E6%94%AF%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%91%BD%E5%90%8D"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 分支类型及命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%88%86%E6%94%AF%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 分支流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83"><span class="nav-number">1.3.</span> <span class="nav-text">3. 提交规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%8F%90%E4%BA%A4%E4%BF%A1%E6%81%AF%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 提交信息格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%8F%90%E4%BA%A4%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 提交类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E8%A7%84%E8%8C%83"><span class="nav-number">1.4.</span> <span class="nav-text">4. 代码合并规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5%E8%A7%84%E8%8C%83"><span class="nav-number">1.5.</span> <span class="nav-text">5. 代码审查规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BB%A3%E7%A0%81%E5%86%B2%E7%AA%81%E5%A4%84%E7%90%86"><span class="nav-number">1.6.</span> <span class="nav-text">6. 代码冲突处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86"><span class="nav-number">1.7.</span> <span class="nav-text">7. 标签管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E4%BB%A3%E7%A0%81%E4%BF%9D%E5%AF%86"><span class="nav-number">1.8.</span> <span class="nav-text">8. 代码保密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E5%85%B6%E4%BB%96"><span class="nav-number">1.9.</span> <span class="nav-text">9. 其他</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">枫叶</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">枫叶</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
