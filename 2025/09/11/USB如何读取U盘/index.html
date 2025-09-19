@@ -28,7 +28,7 @@
 <meta property="og:description" content="linux读取U盘过程">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-09-11T07:30:00.000Z">
-<meta property="article:modified_time" content="2025-09-19T06:34:52.881Z">
+<meta property="article:modified_time" content="2025-09-19T07:00:54.175Z">
 <meta property="article:author" content="枫叶">
 <meta property="article:tag" content="USB linux">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-19 14:34:52" itemprop="dateModified" datetime="2025-09-19T14:34:52+08:00">2025-09-19</time>
+                <time title="修改时间：2025-09-19 15:00:54" itemprop="dateModified" datetime="2025-09-19T15:00:54+08:00">2025-09-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,13 +240,13 @@
 <h2 id="USB设备插入检测（USB接口固定规则）"><a href="#USB设备插入检测（USB接口固定规则）" class="headerlink" title="USB设备插入检测（USB接口固定规则）"></a>USB设备插入检测（USB接口固定规则）</h2><p>当U盘通过USB接口插入主机时，首先触发USB总线枚举流程，核心目标是让Linux识别设备类型、获取设备信息（如厂商ID、产品ID、端点配置），为后续驱动绑定做准备。</p>
 <h3 id="硬件中断触发"><a href="#硬件中断触发" class="headerlink" title="硬件中断触发"></a>硬件中断触发</h3><p>中间层的HUB会实时监测端口的电平变化（D+&#x2F;-线电平变化），一旦HUB检测到端口有电压变化，HUB将利用自己的中断端点将信息反馈给主控制器，告诉主机有设备连接。<br>USB主机控制器（如xHCI）检测到新设备插入，向CPU发送中断请求（IRQ），内核调用控制器驱动的中断处理函数。</p>
 <h3 id="设备复位（首次）"><a href="#设备复位（首次）" class="headerlink" title="设备复位（首次）"></a>设备复位（首次）</h3><p>主机会发送一个Get_Port_Status请求给HUB以了解此次状态改变的确切含义，HUB通过检测USB总线空闲时的差分线的高低电压来判断所连接设备的速度类型，回复给主机。<br>在至少等待100ms后（插入操作的完成以及设备电源稳定工作）。主机控制器就向HUB发出一个Set_Port_Feature(RESET)请求让HUB复位刚才设备插上的端口。<br>HUB通过驱动数据线到复位状态(D+和D-全为低电平)，并持续至少10ms。（HUB不会把这样的复位信号发送给其他已有设备连接的端口，所以其他连在该HUB上的设备自然看不到复位信号。）</p>
-<h3 id="设备速度协商"><a href="#设备速度协商" class="headerlink" title="设备速度协商"></a>设备速度协商</h3><p>根据USB2.0协议，高速设备默认是全速状态配置，所以端口连接的是一个全速设备时，会进行高速能力检测，看看目前这个设备是否还支持高速传输，如果支持，那就切到高速信号模式，否则保持全速状态。<br>设备在刚连接到HUB时或上电只能用全速模式运行。随后HUB会进行高速检测，之后这个设备才会切换到高速模式下工作。</p>
-<h3 id="等待设备复位完成"><a href="#等待设备复位完成" class="headerlink" title="等待设备复位完成"></a>等待设备复位完成</h3><p>当 D- 和 D+ 都保持低电平 (SE0) 10 ms 时，器件会判断符合复位条件。在某些情况下，器件能够在 2.5 µs 内检测到复位，但是，主机将在整个 10 ms 内保持复位条件。<br>主机会周期发送GET_STATUS请求来验证设备是否激起重启状态。当HUB释放了重启状态，设备就处于默认状态了，<br>此时设备的内部电路复位，所有之前的配置（如地址、端点设置）被清空，仅保留最基础的 “响应初始化指令” 能力。<br>设备在重启状态下无法主动发送数据，只能被动接收主机通过集线器转发的控制（传输）指令。<br>设备和主机之间的通信通过控制传输管道，默认管道为地址0、端点0。此时，设备能从总线上得到的最大电流是100mA。</p>
+<h3 id="设备速度协商"><a href="#设备速度协商" class="headerlink" title="设备速度协商"></a>设备速度协商</h3><p>根据USB2.0协议，高速设备默认是全速状态配置，所以端口连接的是一个全速设备时，会进行高速能力检测，看看目前这个设备是否还支持高速传输，如果支持，那就切到高速信号模式，否则保持全速状态。</p>
+<h3 id="等待设备复位完成"><a href="#等待设备复位完成" class="headerlink" title="等待设备复位完成"></a>等待设备复位完成</h3><p>当D-和D+都保持低电平(SE0)10ms时，器件会判断符合复位条件。在某些情况下，器件能够在2.5µs内检测到复位，但是，主机将在整个10ms内保持复位条件。<br>主机会周期发送GET_STATUS请求来验证设备是否激起重启状态。当HUB释放了重启状态，设备就处于默认状态了，<br>此时设备的内部电路复位，所有之前的配置（如地址、端点设置）被清空，仅保留最基础的“响应初始化指令”能力。<br>设备在重启状态下无法主动发送数据，只能被动接收主机通过集线器转发的控制（传输）指令。<br>设备和主机之间的通信通过控制传输管道，默认管道为地址0、端点0。此时，设备能从总线上得到的最大电流是100mA。</p>
 <h2 id="USB设备枚举（USB核心层主导）"><a href="#USB设备枚举（USB核心层主导）" class="headerlink" title="USB设备枚举（USB核心层主导）"></a>USB设备枚举（USB核心层主导）</h2><p>虽然所有未分配地址的设备都是通过地址0来获取主机发来的请求，但由于枚举过程不是多个设备并行处理，而是一次枚举一个设备的方式进行，所以不会发生多个设备同时响应主机发来的请求。</p>
-<h3 id="获取设备描述符（获取简要信息）"><a href="#获取设备描述符（获取简要信息）" class="headerlink" title="获取设备描述符（获取简要信息）"></a>获取设备描述符（获取简要信息）</h3><p>Linux内核通过USB控制传输（ControlTransfer）指令向U盘请求设备描述符（DeviceDescriptor），包含设备类别（U盘属于0x08存储类）、厂商ID（VID）、产品ID（PID）、端点数量等关键信息。<br>其中最主要的是要知道端点0 的最大包长度，进而控制传输要从设备请求多少字节数据。</p>
-<h3 id="主机请求HUB再次复位设备"><a href="#主机请求HUB再次复位设备" class="headerlink" title="主机请求HUB再次复位设备"></a>主机请求HUB再次复位设备</h3><p>获取设备描述符请求成功后，系统会要求HUB对设备进行再一次的复位操作（USB规范里面可没这要求，目的是使设备进入一个确定的状态）。</p>
+<h3 id="获取设备描述符（获取简要信息）"><a href="#获取设备描述符（获取简要信息）" class="headerlink" title="获取设备描述符（获取简要信息）"></a>获取设备描述符（获取简要信息）</h3><p>Linux内核通过USB控制传输（ControlTransfer）指令向U盘请求设备描述符（DeviceDescriptor），包含设备类别（U盘属于0x08存储类）、厂商ID（VID）、产品ID（PID）、端点数量等关键信息。<br>其中最主要的是要知道端点0的最大包长度，进而控制传输要从设备请求多少字节数据。</p>
+<h3 id="主机请求HUB再次复位设备"><a href="#主机请求HUB再次复位设备" class="headerlink" title="主机请求HUB再次复位设备"></a>主机请求HUB再次复位设备</h3><p>获取设备描述符请求成功后，系统会要求HUB对设备进行再一次的复位操作（使设备进入一个确定的状态，USB规范无此要求）。</p>
 <h3 id="分配唯一地址"><a href="#分配唯一地址" class="headerlink" title="分配唯一地址"></a>分配唯一地址</h3><p>制器通过Set_Address给设备分配一个唯一的地址。在完成这次传输之后，设备进入地址状态，之后就启用唯一地址与主机通信。设备消失（被拔出，复位，系统重启）后被收回。</p>
-<h3 id="获取设备描述符（获取详细信息）"><a href="#获取设备描述符（获取详细信息）" class="headerlink" title="获取设备描述符（获取详细信息）"></a>获取设备描述符（获取详细信息）</h3><p>主机发送Get_Descriptor请求读取设备描述符，这次主机发送Get_Descriptor请求使用新地址，它会解析设备描述符的每一项内容。设备描述符内信息包括端点0的最大包长度、设备所支持的配置个数、设备类型、VID、 PID、字符串索引等信息。</p>
+<h3 id="获取设备描述符（获取详细信息）"><a href="#获取设备描述符（获取详细信息）" class="headerlink" title="获取设备描述符（获取详细信息）"></a>获取设备描述符（获取详细信息）</h3><p>主机发送Get_Descriptor请求读取设备描述符，这次主机发送Get_Descriptor请求使用新地址，它会解析设备描述符的每一项内容。设备描述符内信息包括端点0的最大包长度、设备所支持的配置个数、设备类型、VID、PID、字符串索引等信息。</p>
 <h3 id="获取字符串描述符"><a href="#获取字符串描述符" class="headerlink" title="获取字符串描述符"></a>获取字符串描述符</h3><p>如果有字符串描述符，主机会获取语言ID描述符和字符串描述符。</p>
 <h3 id="获取标准配置描述符"><a href="#获取标准配置描述符" class="headerlink" title="获取标准配置描述符"></a>获取标准配置描述符</h3><p>主机发送Get_Descriptor_Configuration请求并解析标准配置描述符，标准配置描述符内信息包括配置描述符集合长度、接口数、设备属性、设备所需电流。</p>
 <h3 id="获取配置描述符集合"><a href="#获取配置描述符集合" class="headerlink" title="获取配置描述符集合"></a>获取配置描述符集合</h3><p>配置描述符集合包括标准配置描述符、接口描述符、端点描述符，如果是HID设备还会包括HID描述符，<br>此时即可确定设备的具体种类。</p>
@@ -255,7 +255,7 @@
 <h3 id="获取接口描述符"><a href="#获取接口描述符" class="headerlink" title="获取接口描述符"></a>获取接口描述符</h3><p>基于配置描述符，进一步获取接口描述符（InterfaceDescriptor）：U盘的存储功能通过“批量传输接口”实现，描述符中会指定接口类别（0x08存储类）、子类（0x06SCSI透明命令集）、协议（0x50BOT协议，即Bulk-OnlyTransport）——这些信息是后续绑定usb-storage驱动的关键。</p>
 <h2 id="USB存储类驱动绑定（usb-storage主导）"><a href="#USB存储类驱动绑定（usb-storage主导）" class="headerlink" title="USB存储类驱动绑定（usb-storage主导）"></a>USB存储类驱动绑定（usb-storage主导）</h2><p>枚举完成后，Linux内核的驱动匹配机制会为U盘绑定对应的“USB存储类驱动”（即usb-storage模块），该模块负责将USB协议与存储设备逻辑对接。</p>
 <h3 id="驱动匹配规则"><a href="#驱动匹配规则" class="headerlink" title="驱动匹配规则"></a>驱动匹配规则</h3><p>usb-storage驱动在初始化时，会向USB核心层注册一个usb_driver结构体，其中包含匹配表（id_table），指定其支持的设备类型：<br>接口类别：USB_INTERFACE_CLASS_MASS_STORAGE（0x08，存储类）；<br>接口子类：USB_SC_SCSI（0x06，SCSI透明命令集）；<br>接口协议：USB_PR_BULK（0x50，BOT协议）。<br>当U盘的接口描述符与该匹配表一致时，USB核心层会调用usb-storage的probe函数，完成驱动绑定。</p>
-<h3 id="初始化存储设备通信通道"><a href="#初始化存储设备通信通道" class="headerlink" title="初始化存储设备通信通道"></a>初始化存储设备通信通道</h3><p>probe函数的核心工作：<br>主机解析U盘的端点描述符（EndpointDescriptor）：识别U盘用于数据传输的“批量端点”（BulkEndpoint）——通常包含1个批量输出端点（主机→U盘，用于发送SCSI命令）和1个批量输入端点（U盘→主机，用于返回数据&#x2F;状态）；<br>初始化BOT协议上下文：BOT是U盘与主机通信的标准协议，usb-storage会创建BOT传输结构体，管理命令包（CBW）、数据包、状态包（CSW）的交互逻辑；<br>注册为“存储设备”：usb-storage会调用Linux存储子系统的接口，将U盘抽象为一个“通用存储设备”，并触发后续块设备驱动的绑定。<br>BOT协议（Bulk-Only Transport）是USB大容量存储设备（Mass Storage Class, MSC）中广泛使用的一种数据传输协议。</p>
+<h3 id="初始化存储设备通信通道"><a href="#初始化存储设备通信通道" class="headerlink" title="初始化存储设备通信通道"></a>初始化存储设备通信通道</h3><p>probe函数的核心工作：<br>主机解析U盘的端点描述符（EndpointDescriptor）：识别U盘用于数据传输的“批量端点”（BulkEndpoint）——通常包含1个批量输出端点（主机→U盘，用于发送SCSI命令）和1个批量输入端点（U盘→主机，用于返回数据&#x2F;状态）；<br>初始化BOT协议上下文：BOT是U盘与主机通信的标准协议，usb-storage会创建BOT传输结构体，管理命令包（CBW）、数据包、状态包（CSW）的交互逻辑；<br>注册为“存储设备”：usb-storage会调用Linux存储子系统的接口，将U盘抽象为一个“通用存储设备”，并触发后续块设备驱动的绑定。<br>BOT协议（Bulk-OnlyTransport）是USB大容量存储设备（MassStorageClass,MSC）中广泛使用的一种数据传输协议。</p>
 <h2 id="SCSI子系统与块设备驱动绑定（SCSI子系统和sd-mod主导）"><a href="#SCSI子系统与块设备驱动绑定（SCSI子系统和sd-mod主导）" class="headerlink" title="SCSI子系统与块设备驱动绑定（SCSI子系统和sd_mod主导）"></a>SCSI子系统与块设备驱动绑定（SCSI子系统和sd_mod主导）</h2><p>U盘本质是“USB接口的块存储设备”（数据按块读写，如512B&#x2F;4KB块），因此需要块设备驱动（sd_mod模块，即SCSI磁盘驱动）将其映射为Linux标准块设备文件（如&#x2F;dev&#x2F;sdb）。</p>
 <h3 id="SCSI子系统适配"><a href="#SCSI子系统适配" class="headerlink" title="SCSI子系统适配"></a>SCSI子系统适配</h3><p>usb-storage驱动会模拟一个SCSI主机适配器（SCSIHostAdapter），并将U盘作为“虚拟SCSI磁盘设备”注册到LinuxSCSI子系统中。<br>原因：U盘的底层命令遵循SCSI标准（如读块命令READ(10)、写块命令WRITE(10)），通过SCSI子系统可复用Linux已有的块设备驱动框架。</p>
 <h3 id="块设备驱动绑定（sd-mod）"><a href="#块设备驱动绑定（sd-mod）" class="headerlink" title="块设备驱动绑定（sd_mod）"></a>块设备驱动绑定（sd_mod）</h3><p>SCSI子系统检测到新的“虚拟SCSI磁盘”后，会触发sd_mod驱动的匹配（sd_mod支持所有SCSI磁盘设备）：<br>sd_mod调用SCSI命令获取U盘的容量信息（如总块数、每块大小）、分区表（MBR&#x2F;GPT）；<br>在&#x2F;dev目录下创建块设备节点：如整个U盘对应&#x2F;dev&#x2F;sdb，第一个分区对应&#x2F;dev&#x2F;sdb1（主设备号8，次设备号由内核分配）；<br>将设备注册到Linux块设备子系统，后续可通过块设备接口（如read()&#x2F;write()系统调用）读写数据。</p>
