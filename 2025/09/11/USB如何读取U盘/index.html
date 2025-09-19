@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="linux读取U盘过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux如何读取U盘数据">
+<meta property="og:url" content="http://example.com/2025/09/11/USB%E5%A6%82%E4%BD%95%E8%AF%BB%E5%8F%96U%E7%9B%98/index.html">
+<meta property="og:site_name" content="枫叶苑">
+<meta property="og:description" content="linux读取U盘过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-09-11T07:30:00.000Z">
+<meta property="article:modified_time" content="2025-09-19T06:34:52.881Z">
+<meta property="article:author" content="枫叶">
+<meta property="article:tag" content="USB linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/09/11/USB%E5%A6%82%E4%BD%95%E8%AF%BB%E5%8F%96U%E7%9B%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>linux如何读取U盘数据 | 枫叶苑</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">枫叶苑</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/11/USB%E5%A6%82%E4%BD%95%E8%AF%BB%E5%8F%96U%E7%9B%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="枫叶">
+      <meta itemprop="description" content="选择有时候比努力更重要">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫叶苑">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux如何读取U盘数据
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-11 15:30:00" itemprop="dateCreated datePublished" datetime="2025-09-11T15:30:00+08:00">2025-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-09-19 14:34:52" itemprop="dateModified" datetime="2025-09-19T14:34:52+08:00">2025-09-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">linux读取U盘过程</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在Linux系统中，基于USB协议读取U盘数据的驱动过程是一个多层级、模块化协作的流程，涉及USB核心驱动、USB存储类驱动、块设备驱动及文件系统驱动等多个组件。整个过程遵循“设备枚举→驱动绑定→数据传输→文件访问”的逻辑。</p>
+<h1 id="LinuxUSB驱动的分层模型基本概念"><a href="#LinuxUSB驱动的分层模型基本概念" class="headerlink" title="LinuxUSB驱动的分层模型基本概念"></a>LinuxUSB驱动的分层模型基本概念</h1><p>Linux为了降低驱动开发复杂度，将USB驱动分为4个核心层级，各层级职责明确、解耦协作，U盘读取过程本质是各层级数据与指令的流转：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>核心职责</th>
+<th align="center">关键组件&#x2F;模块</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>USB硬件层</td>
+<td>物理硬件交互（USB控制器、U盘设备），处理电信号、USB协议物理层（如差分信号）</td>
+<td align="center">USB主机控制器（如xHCI、EHCI）</td>
+</tr>
+<tr>
+<td>USB核心层</td>
+<td>管理USB总线、设备枚举、端点配置，提供驱动框架（如usb_driver结构体）</td>
+<td align="center">usbcore内核模块</td>
+</tr>
+<tr>
+<td>USB类驱动层</td>
+<td>处理特定类型USB设备的逻辑（如U盘属于“USB存储类”），对接核心层与功能层</td>
+<td align="center">usb-storage模块</td>
+</tr>
+<tr>
+<td>功能驱动层</td>
+<td>将USB存储设备抽象为Linux标准块设备，提供文件系统访问接口</td>
+<td align="center">块设备驱动（sd_mod）、文件系统（ext4&#x2F;NTFS等）</td>
+</tr>
+</tbody></table>
+<h1 id="驱动详细流程"><a href="#驱动详细流程" class="headerlink" title="驱动详细流程"></a>驱动详细流程</h1><p>U盘插入-&gt;设备枚举-&gt;注册驱动-&gt;数据读取</p>
+<h2 id="USB设备插入检测（USB接口固定规则）"><a href="#USB设备插入检测（USB接口固定规则）" class="headerlink" title="USB设备插入检测（USB接口固定规则）"></a>USB设备插入检测（USB接口固定规则）</h2><p>当U盘通过USB接口插入主机时，首先触发USB总线枚举流程，核心目标是让Linux识别设备类型、获取设备信息（如厂商ID、产品ID、端点配置），为后续驱动绑定做准备。</p>
+<h3 id="硬件中断触发"><a href="#硬件中断触发" class="headerlink" title="硬件中断触发"></a>硬件中断触发</h3><p>中间层的HUB会实时监测端口的电平变化（D+&#x2F;-线电平变化），一旦HUB检测到端口有电压变化，HUB将利用自己的中断端点将信息反馈给主控制器，告诉主机有设备连接。<br>USB主机控制器（如xHCI）检测到新设备插入，向CPU发送中断请求（IRQ），内核调用控制器驱动的中断处理函数。</p>
+<h3 id="设备复位（首次）"><a href="#设备复位（首次）" class="headerlink" title="设备复位（首次）"></a>设备复位（首次）</h3><p>主机会发送一个Get_Port_Status请求给HUB以了解此次状态改变的确切含义，HUB通过检测USB总线空闲时的差分线的高低电压来判断所连接设备的速度类型，回复给主机。<br>在至少等待100ms后（插入操作的完成以及设备电源稳定工作）。主机控制器就向HUB发出一个Set_Port_Feature(RESET)请求让HUB复位刚才设备插上的端口。<br>HUB通过驱动数据线到复位状态(D+和D-全为低电平)，并持续至少10ms。（HUB不会把这样的复位信号发送给其他已有设备连接的端口，所以其他连在该HUB上的设备自然看不到复位信号。）</p>
+<h3 id="设备速度协商"><a href="#设备速度协商" class="headerlink" title="设备速度协商"></a>设备速度协商</h3><p>根据USB2.0协议，高速设备默认是全速状态配置，所以端口连接的是一个全速设备时，会进行高速能力检测，看看目前这个设备是否还支持高速传输，如果支持，那就切到高速信号模式，否则保持全速状态。<br>设备在刚连接到HUB时或上电只能用全速模式运行。随后HUB会进行高速检测，之后这个设备才会切换到高速模式下工作。</p>
+<h3 id="等待设备复位完成"><a href="#等待设备复位完成" class="headerlink" title="等待设备复位完成"></a>等待设备复位完成</h3><p>当 D- 和 D+ 都保持低电平 (SE0) 10 ms 时，器件会判断符合复位条件。在某些情况下，器件能够在 2.5 µs 内检测到复位，但是，主机将在整个 10 ms 内保持复位条件。<br>主机会周期发送GET_STATUS请求来验证设备是否激起重启状态。当HUB释放了重启状态，设备就处于默认状态了，<br>此时设备的内部电路复位，所有之前的配置（如地址、端点设置）被清空，仅保留最基础的 “响应初始化指令” 能力。<br>设备在重启状态下无法主动发送数据，只能被动接收主机通过集线器转发的控制（传输）指令。<br>设备和主机之间的通信通过控制传输管道，默认管道为地址0、端点0。此时，设备能从总线上得到的最大电流是100mA。</p>
+<h2 id="USB设备枚举（USB核心层主导）"><a href="#USB设备枚举（USB核心层主导）" class="headerlink" title="USB设备枚举（USB核心层主导）"></a>USB设备枚举（USB核心层主导）</h2><p>虽然所有未分配地址的设备都是通过地址0来获取主机发来的请求，但由于枚举过程不是多个设备并行处理，而是一次枚举一个设备的方式进行，所以不会发生多个设备同时响应主机发来的请求。</p>
+<h3 id="获取设备描述符（获取简要信息）"><a href="#获取设备描述符（获取简要信息）" class="headerlink" title="获取设备描述符（获取简要信息）"></a>获取设备描述符（获取简要信息）</h3><p>Linux内核通过USB控制传输（ControlTransfer）指令向U盘请求设备描述符（DeviceDescriptor），包含设备类别（U盘属于0x08存储类）、厂商ID（VID）、产品ID（PID）、端点数量等关键信息。<br>其中最主要的是要知道端点0 的最大包长度，进而控制传输要从设备请求多少字节数据。</p>
+<h3 id="主机请求HUB再次复位设备"><a href="#主机请求HUB再次复位设备" class="headerlink" title="主机请求HUB再次复位设备"></a>主机请求HUB再次复位设备</h3><p>获取设备描述符请求成功后，系统会要求HUB对设备进行再一次的复位操作（USB规范里面可没这要求，目的是使设备进入一个确定的状态）。</p>
+<h3 id="分配唯一地址"><a href="#分配唯一地址" class="headerlink" title="分配唯一地址"></a>分配唯一地址</h3><p>制器通过Set_Address给设备分配一个唯一的地址。在完成这次传输之后，设备进入地址状态，之后就启用唯一地址与主机通信。设备消失（被拔出，复位，系统重启）后被收回。</p>
+<h3 id="获取设备描述符（获取详细信息）"><a href="#获取设备描述符（获取详细信息）" class="headerlink" title="获取设备描述符（获取详细信息）"></a>获取设备描述符（获取详细信息）</h3><p>主机发送Get_Descriptor请求读取设备描述符，这次主机发送Get_Descriptor请求使用新地址，它会解析设备描述符的每一项内容。设备描述符内信息包括端点0的最大包长度、设备所支持的配置个数、设备类型、VID、 PID、字符串索引等信息。</p>
+<h3 id="获取字符串描述符"><a href="#获取字符串描述符" class="headerlink" title="获取字符串描述符"></a>获取字符串描述符</h3><p>如果有字符串描述符，主机会获取语言ID描述符和字符串描述符。</p>
+<h3 id="获取标准配置描述符"><a href="#获取标准配置描述符" class="headerlink" title="获取标准配置描述符"></a>获取标准配置描述符</h3><p>主机发送Get_Descriptor_Configuration请求并解析标准配置描述符，标准配置描述符内信息包括配置描述符集合长度、接口数、设备属性、设备所需电流。</p>
+<h3 id="获取配置描述符集合"><a href="#获取配置描述符集合" class="headerlink" title="获取配置描述符集合"></a>获取配置描述符集合</h3><p>配置描述符集合包括标准配置描述符、接口描述符、端点描述符，如果是HID设备还会包括HID描述符，<br>此时即可确定设备的具体种类。</p>
+<h3 id="选择配置"><a href="#选择配置" class="headerlink" title="选择配置"></a>选择配置</h3><p>对于复合设备，通常应该是不同的接口配置给不同的驱动。</p>
+<p>主机发送Set_Configuration请求来正式确定选择设备的哪个配置作为工作配置（对于大多数设备来说，一般只有一个配置被定义）。至此，设备处于配置状态(Configured)。</p>
+<h3 id="获取接口描述符"><a href="#获取接口描述符" class="headerlink" title="获取接口描述符"></a>获取接口描述符</h3><p>基于配置描述符，进一步获取接口描述符（InterfaceDescriptor）：U盘的存储功能通过“批量传输接口”实现，描述符中会指定接口类别（0x08存储类）、子类（0x06SCSI透明命令集）、协议（0x50BOT协议，即Bulk-OnlyTransport）——这些信息是后续绑定usb-storage驱动的关键。</p>
+<h2 id="USB存储类驱动绑定（usb-storage主导）"><a href="#USB存储类驱动绑定（usb-storage主导）" class="headerlink" title="USB存储类驱动绑定（usb-storage主导）"></a>USB存储类驱动绑定（usb-storage主导）</h2><p>枚举完成后，Linux内核的驱动匹配机制会为U盘绑定对应的“USB存储类驱动”（即usb-storage模块），该模块负责将USB协议与存储设备逻辑对接。</p>
+<h3 id="驱动匹配规则"><a href="#驱动匹配规则" class="headerlink" title="驱动匹配规则"></a>驱动匹配规则</h3><p>usb-storage驱动在初始化时，会向USB核心层注册一个usb_driver结构体，其中包含匹配表（id_table），指定其支持的设备类型：<br>接口类别：USB_INTERFACE_CLASS_MASS_STORAGE（0x08，存储类）；<br>接口子类：USB_SC_SCSI（0x06，SCSI透明命令集）；<br>接口协议：USB_PR_BULK（0x50，BOT协议）。<br>当U盘的接口描述符与该匹配表一致时，USB核心层会调用usb-storage的probe函数，完成驱动绑定。</p>
+<h3 id="初始化存储设备通信通道"><a href="#初始化存储设备通信通道" class="headerlink" title="初始化存储设备通信通道"></a>初始化存储设备通信通道</h3><p>probe函数的核心工作：<br>主机解析U盘的端点描述符（EndpointDescriptor）：识别U盘用于数据传输的“批量端点”（BulkEndpoint）——通常包含1个批量输出端点（主机→U盘，用于发送SCSI命令）和1个批量输入端点（U盘→主机，用于返回数据&#x2F;状态）；<br>初始化BOT协议上下文：BOT是U盘与主机通信的标准协议，usb-storage会创建BOT传输结构体，管理命令包（CBW）、数据包、状态包（CSW）的交互逻辑；<br>注册为“存储设备”：usb-storage会调用Linux存储子系统的接口，将U盘抽象为一个“通用存储设备”，并触发后续块设备驱动的绑定。<br>BOT协议（Bulk-Only Transport）是USB大容量存储设备（Mass Storage Class, MSC）中广泛使用的一种数据传输协议。</p>
+<h2 id="SCSI子系统与块设备驱动绑定（SCSI子系统和sd-mod主导）"><a href="#SCSI子系统与块设备驱动绑定（SCSI子系统和sd-mod主导）" class="headerlink" title="SCSI子系统与块设备驱动绑定（SCSI子系统和sd_mod主导）"></a>SCSI子系统与块设备驱动绑定（SCSI子系统和sd_mod主导）</h2><p>U盘本质是“USB接口的块存储设备”（数据按块读写，如512B&#x2F;4KB块），因此需要块设备驱动（sd_mod模块，即SCSI磁盘驱动）将其映射为Linux标准块设备文件（如&#x2F;dev&#x2F;sdb）。</p>
+<h3 id="SCSI子系统适配"><a href="#SCSI子系统适配" class="headerlink" title="SCSI子系统适配"></a>SCSI子系统适配</h3><p>usb-storage驱动会模拟一个SCSI主机适配器（SCSIHostAdapter），并将U盘作为“虚拟SCSI磁盘设备”注册到LinuxSCSI子系统中。<br>原因：U盘的底层命令遵循SCSI标准（如读块命令READ(10)、写块命令WRITE(10)），通过SCSI子系统可复用Linux已有的块设备驱动框架。</p>
+<h3 id="块设备驱动绑定（sd-mod）"><a href="#块设备驱动绑定（sd-mod）" class="headerlink" title="块设备驱动绑定（sd_mod）"></a>块设备驱动绑定（sd_mod）</h3><p>SCSI子系统检测到新的“虚拟SCSI磁盘”后，会触发sd_mod驱动的匹配（sd_mod支持所有SCSI磁盘设备）：<br>sd_mod调用SCSI命令获取U盘的容量信息（如总块数、每块大小）、分区表（MBR&#x2F;GPT）；<br>在&#x2F;dev目录下创建块设备节点：如整个U盘对应&#x2F;dev&#x2F;sdb，第一个分区对应&#x2F;dev&#x2F;sdb1（主设备号8，次设备号由内核分配）；<br>将设备注册到Linux块设备子系统，后续可通过块设备接口（如read()&#x2F;write()系统调用）读写数据。</p>
+<h2 id="数据读取（文件系统-块设备驱动-USB存储驱动协作）"><a href="#数据读取（文件系统-块设备驱动-USB存储驱动协作）" class="headerlink" title="数据读取（文件系统+块设备驱动+USB存储驱动协作）"></a>数据读取（文件系统+块设备驱动+USB存储驱动协作）</h2><p>当用户通过文件系统（如ls&#x2F;mnt&#x2F;usb、cat&#x2F;mnt&#x2F;usb&#x2F;file.txt）访问U盘数据时，触发多层级的数据流转，以“读取一个文件”为例：</p>
+<h3 id="文件系统：解析路径与定位块"><a href="#文件系统：解析路径与定位块" class="headerlink" title="文件系统：解析路径与定位块"></a>文件系统：解析路径与定位块</h3><p>用户空间调用open()&#x2F;read()系统调用，传入文件路径（如&#x2F;mnt&#x2F;usb&#x2F;file.txt）；<br>挂载的文件系统（如NTFS、ext4）解析路径，找到该文件对应的inode，从inode中获取文件数据在U盘中的物理块地址（如第1000~1005块）和块数量。</p>
+<h3 id="块设备子系统：发起块读写请求"><a href="#块设备子系统：发起块读写请求" class="headerlink" title="块设备子系统：发起块读写请求"></a>块设备子系统：发起块读写请求</h3><p>文件系统层调用块设备子系统的接口（如bio结构体），生成一个块I&#x2F;O请求（biorequest），请求内容为“读取&#x2F;dev&#x2F;sdb1的第1000~1005块”；<br>块设备调度器（如mq-deadline）对bio请求进行排序优化（减少磁盘寻道时间，U盘无机械结构，主要优化请求合并），然后将请求下发给sd_mod驱动。</p>
+<h3 id="SCSI子系统：转换为SCSI命令"><a href="#SCSI子系统：转换为SCSI命令" class="headerlink" title="SCSI子系统：转换为SCSI命令"></a>SCSI子系统：转换为SCSI命令</h3><p>sd_mod驱动将块I&#x2F;O请求转换为SCSI读命令（如READ(10)），该命令包含目标块地址、块数量、数据长度等参数；<br>SCSI子系统将SCSI命令封装为SCSI命令描述符块（CDB），并通过usb-storage模拟的“SCSI主机适配器”下发给usb-storage驱动。</p>
+<h3 id="USB驱动层：封装为USBBOT协议包"><a href="#USB驱动层：封装为USBBOT协议包" class="headerlink" title="USB驱动层：封装为USBBOT协议包"></a>USB驱动层：封装为USBBOT协议包</h3><p>usb-storage驱动接收SCSI的CDB后，按照BOT协议封装为命令块包（CBW）：CBW包含CDB数据、传输方向（输入&#x2F;输出）、数据长度、端点信息等；<br>通过USB核心层的批量输出端点（BulkOut），将CBW发送给U盘；</p>
+<h3 id="U盘响应读取"><a href="#U盘响应读取" class="headerlink" title="U盘响应读取"></a>U盘响应读取</h3><p>U盘解析CBW后，执行读操作，将指定块的数据通过批量输入端点（BulkIn）回传给主机；<br>数据传输完成后，U盘发送状态块包（CSW）给主机，告知传输结果（成功&#x2F;失败、实际传输长度）。</p>
+<h3 id="USB驱动层：后回传至SCSI"><a href="#USB驱动层：后回传至SCSI" class="headerlink" title="USB驱动层：后回传至SCSI"></a>USB驱动层：后回传至SCSI</h3><p>usb-storage驱动接收数据后，将其交给SCSI子系统，</p>
+<h3 id="SCSI子系统：响应块设备子系统请求"><a href="#SCSI子系统：响应块设备子系统请求" class="headerlink" title="SCSI子系统：响应块设备子系统请求"></a>SCSI子系统：响应块设备子系统请求</h3><p>由sd_mod驱动将数据填入bio请求的缓冲区；</p>
+<h3 id="块设备子系统：回传至文件系统"><a href="#块设备子系统：回传至文件系统" class="headerlink" title="块设备子系统：回传至文件系统"></a>块设备子系统：回传至文件系统</h3><p>块设备子系统将bio缓冲区的数据回传给文件系统层，</p>
+<h3 id="文件系统：拷贝数据至用户空间"><a href="#文件系统：拷贝数据至用户空间" class="headerlink" title="文件系统：拷贝数据至用户空间"></a>文件系统：拷贝数据至用户空间</h3><p>文件系统层再通过read()系统调用将数据拷贝到用户空间的应用程序缓冲区（如cat命令的内存空间）；<br>应用程序接收到数据后，输出到终端或进行后续处理，完成一次U盘数据读取。</p>
+<h1 id="关键技术点补充"><a href="#关键技术点补充" class="headerlink" title="关键技术点补充"></a>关键技术点补充</h1><h2 id="USB传输类型"><a href="#USB传输类型" class="headerlink" title="USB传输类型"></a>USB传输类型</h2><p>U盘数据传输使用批量传输（BulkTransfer），特点是：<br>无固定带宽保证，但传输可靠（有CRC校验和重传机制）；<br>适合大量数据传输（如文件读写），传输速度由USB版本和U盘闪存速度决定。</p>
+<h2 id="驱动加载机制"><a href="#驱动加载机制" class="headerlink" title="驱动加载机制"></a>驱动加载机制</h2><p>上述驱动模块（usbcore、usb-storage、sd_mod）默认由Linux内核自动加载：<br>usbcore是USB子系统的核心，内核启动时自动加载；<br>usb-storage和sd_mod通常作为内核模块，当U盘插入并匹配时，由modprobe自动加载。</p>
+<h2 id="设备节点与挂载"><a href="#设备节点与挂载" class="headerlink" title="设备节点与挂载"></a>设备节点与挂载</h2><p>块设备节点（&#x2F;dev&#x2F;sdb1）是用户空间访问U盘的“入口”，但需通过挂载（mount）关联到文件系统目录（如&#x2F;mnt&#x2F;usb）后才能通过文件路径访问；<br>卸载U盘前需执行umount&#x2F;mnt&#x2F;usb，确保所有缓存数据已写入U盘，避免数据丢失。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/USB-linux/" rel="tag"># USB linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/09/08/boost%E7%9A%84mutex%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98/" rel="prev" title="Boost的named_mutex问题">
+      <i class="fa fa-chevron-left"></i> Boost的named_mutex问题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/09/11/WSL%E8%BF%81%E7%A7%BB/" rel="next" title="WSL迁移">
+      WSL迁移 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LinuxUSB%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E5%B1%82%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">LinuxUSB驱动的分层模型基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E8%AF%A6%E7%BB%86%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">驱动详细流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#USB%E8%AE%BE%E5%A4%87%E6%8F%92%E5%85%A5%E6%A3%80%E6%B5%8B%EF%BC%88USB%E6%8E%A5%E5%8F%A3%E5%9B%BA%E5%AE%9A%E8%A7%84%E5%88%99%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">USB设备插入检测（USB接口固定规则）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E4%B8%AD%E6%96%AD%E8%A7%A6%E5%8F%91"><span class="nav-number">2.1.1.</span> <span class="nav-text">硬件中断触发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E5%A4%8D%E4%BD%8D%EF%BC%88%E9%A6%96%E6%AC%A1%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">设备复位（首次）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E9%80%9F%E5%BA%A6%E5%8D%8F%E5%95%86"><span class="nav-number">2.1.3.</span> <span class="nav-text">设备速度协商</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%89%E5%BE%85%E8%AE%BE%E5%A4%87%E5%A4%8D%E4%BD%8D%E5%AE%8C%E6%88%90"><span class="nav-number">2.1.4.</span> <span class="nav-text">等待设备复位完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#USB%E8%AE%BE%E5%A4%87%E6%9E%9A%E4%B8%BE%EF%BC%88USB%E6%A0%B8%E5%BF%83%E5%B1%82%E4%B8%BB%E5%AF%BC%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">USB设备枚举（USB核心层主导）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88%E8%8E%B7%E5%8F%96%E7%AE%80%E8%A6%81%E4%BF%A1%E6%81%AF%EF%BC%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">获取设备描述符（获取简要信息）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E8%AF%B7%E6%B1%82HUB%E5%86%8D%E6%AC%A1%E5%A4%8D%E4%BD%8D%E8%AE%BE%E5%A4%87"><span class="nav-number">2.2.2.</span> <span class="nav-text">主机请求HUB再次复位设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E5%94%AF%E4%B8%80%E5%9C%B0%E5%9D%80"><span class="nav-number">2.2.3.</span> <span class="nav-text">分配唯一地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87%E6%8F%8F%E8%BF%B0%E7%AC%A6%EF%BC%88%E8%8E%B7%E5%8F%96%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%EF%BC%89"><span class="nav-number">2.2.4.</span> <span class="nav-text">获取设备描述符（获取详细信息）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">2.2.5.</span> <span class="nav-text">获取字符串描述符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%A0%87%E5%87%86%E9%85%8D%E7%BD%AE%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">2.2.6.</span> <span class="nav-text">获取标准配置描述符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E9%85%8D%E7%BD%AE%E6%8F%8F%E8%BF%B0%E7%AC%A6%E9%9B%86%E5%90%88"><span class="nav-number">2.2.7.</span> <span class="nav-text">获取配置描述符集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%8E%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">2.2.9.</span> <span class="nav-text">获取接口描述符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#USB%E5%AD%98%E5%82%A8%E7%B1%BB%E9%A9%B1%E5%8A%A8%E7%BB%91%E5%AE%9A%EF%BC%88usb-storage%E4%B8%BB%E5%AF%BC%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">USB存储类驱动绑定（usb-storage主导）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E5%8C%B9%E9%85%8D%E8%A7%84%E5%88%99"><span class="nav-number">2.3.1.</span> <span class="nav-text">驱动匹配规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E9%80%9A%E4%BF%A1%E9%80%9A%E9%81%93"><span class="nav-number">2.3.2.</span> <span class="nav-text">初始化存储设备通信通道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SCSI%E5%AD%90%E7%B3%BB%E7%BB%9F%E4%B8%8E%E5%9D%97%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%BB%91%E5%AE%9A%EF%BC%88SCSI%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%92%8Csd-mod%E4%B8%BB%E5%AF%BC%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">SCSI子系统与块设备驱动绑定（SCSI子系统和sd_mod主导）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SCSI%E5%AD%90%E7%B3%BB%E7%BB%9F%E9%80%82%E9%85%8D"><span class="nav-number">2.4.1.</span> <span class="nav-text">SCSI子系统适配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E7%BB%91%E5%AE%9A%EF%BC%88sd-mod%EF%BC%89"><span class="nav-number">2.4.2.</span> <span class="nav-text">块设备驱动绑定（sd_mod）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96%EF%BC%88%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-%E5%9D%97%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8-USB%E5%AD%98%E5%82%A8%E9%A9%B1%E5%8A%A8%E5%8D%8F%E4%BD%9C%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">数据读取（文件系统+块设备驱动+USB存储驱动协作）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%9A%E8%A7%A3%E6%9E%90%E8%B7%AF%E5%BE%84%E4%B8%8E%E5%AE%9A%E4%BD%8D%E5%9D%97"><span class="nav-number">2.5.1.</span> <span class="nav-text">文件系统：解析路径与定位块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E8%AE%BE%E5%A4%87%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%8F%91%E8%B5%B7%E5%9D%97%E8%AF%BB%E5%86%99%E8%AF%B7%E6%B1%82"><span class="nav-number">2.5.2.</span> <span class="nav-text">块设备子系统：发起块读写请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCSI%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9A%E8%BD%AC%E6%8D%A2%E4%B8%BASCSI%E5%91%BD%E4%BB%A4"><span class="nav-number">2.5.3.</span> <span class="nav-text">SCSI子系统：转换为SCSI命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB%E9%A9%B1%E5%8A%A8%E5%B1%82%EF%BC%9A%E5%B0%81%E8%A3%85%E4%B8%BAUSBBOT%E5%8D%8F%E8%AE%AE%E5%8C%85"><span class="nav-number">2.5.4.</span> <span class="nav-text">USB驱动层：封装为USBBOT协议包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U%E7%9B%98%E5%93%8D%E5%BA%94%E8%AF%BB%E5%8F%96"><span class="nav-number">2.5.5.</span> <span class="nav-text">U盘响应读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB%E9%A9%B1%E5%8A%A8%E5%B1%82%EF%BC%9A%E5%90%8E%E5%9B%9E%E4%BC%A0%E8%87%B3SCSI"><span class="nav-number">2.5.6.</span> <span class="nav-text">USB驱动层：后回传至SCSI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCSI%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%93%8D%E5%BA%94%E5%9D%97%E8%AE%BE%E5%A4%87%E5%AD%90%E7%B3%BB%E7%BB%9F%E8%AF%B7%E6%B1%82"><span class="nav-number">2.5.7.</span> <span class="nav-text">SCSI子系统：响应块设备子系统请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E8%AE%BE%E5%A4%87%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%9B%9E%E4%BC%A0%E8%87%B3%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.5.8.</span> <span class="nav-text">块设备子系统：回传至文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%9A%E6%8B%B7%E8%B4%9D%E6%95%B0%E6%8D%AE%E8%87%B3%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4"><span class="nav-number">2.5.9.</span> <span class="nav-text">文件系统：拷贝数据至用户空间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%E7%82%B9%E8%A1%A5%E5%85%85"><span class="nav-number">3.</span> <span class="nav-text">关键技术点补充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#USB%E4%BC%A0%E8%BE%93%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">USB传输类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.</span> <span class="nav-text">驱动加载机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E8%8A%82%E7%82%B9%E4%B8%8E%E6%8C%82%E8%BD%BD"><span class="nav-number">3.3.</span> <span class="nav-text">设备节点与挂载</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">枫叶</p>
+  <div class="site-description" itemprop="description">选择有时候比努力更重要</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">枫叶</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
